@@ -5,19 +5,22 @@ export const AuthContext = createContext({});
 export const AuthProvider =({children}) => {
     const [user , setUser] = useState();
 
-  useEffect(() => {
-    // Verifique se o usuário está autenticado ao carregar a página
-    const userToken = localStorage.getItem("user_token")
-    const usersStorage = localStorage.getItem("users_db")
-
- if (userToken && usersStorage) {
-    const hasUser = JSON.parse(localStorage)?.filter(
-        (user) => user.email === JSON.parse(userToken).email
-        );
-
-        if (hasUser) setUser(hasUser[0]);
- }
-},[]);
+    useEffect(() => {
+        // Verifique se o usuário está autenticado ao carregar a página
+        const userToken = localStorage.getItem("user_token");
+        const usersStorage = localStorage.getItem("users_db");
+    
+        if (userToken && usersStorage) {
+            const users = JSON.parse(usersStorage); // Analisa a lista de usuários do localStorage
+            const tokenUser = JSON.parse(userToken); // Analisa o token de usuário
+    
+            const hasUser = users.filter(user => user.email === tokenUser.email);
+            if (hasUser.length > 0) {
+                setUser(hasUser[0]);
+            }
+        }
+    }, []);
+    
 
 const Signin = (email, password) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_db"));

@@ -1,0 +1,9 @@
+.footerContainer {
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+}
+
+.footer {
+  /* Estilos para o rodapé */
+}
